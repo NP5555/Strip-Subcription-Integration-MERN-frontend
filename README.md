@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# Strip Subscription Integration (MERN)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Stripe Subscription Integration project! This application showcases how to implement subscription functionality using Stripe in a MERN (MongoDB, Express, React, Node.js) stack. This documentation will guide you through the setup, usage, and features of the application.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- User registration and authentication with JWT.
+- Stripe payment integration for managing subscriptions.
+- Subscription plans management (create, retrieve, update, delete).
+- Secure payment processing with webhooks for real-time updates.
+- Responsive user interface built with React.
+- User dashboard for managing subscriptions and billing.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- **Frontend:** React, Axios, Bootstrap
+- **Backend:** Node.js, Express.js, MongoDB
+- **Stripe:** Stripe API for payment integration
+- **Authentication:** JSON Web Tokens (JWT)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+Follow these instructions to set up the project locally:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/NP5555/Strip-Subcription-Integration-MERN.git
+   cd Strip-Subcription-Integration-MERN
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Setup Backend:**
+   - Navigate to the backend directory:
+     ```bash
+     cd backend
+     ```
+   - Install the dependencies:
+     ```bash
+     npm install
+     ```
+   - Create a `.env` file in the backend directory and add your environment variables, such as:
+     ```
+     MONGODB_URI=your_mongodb_connection_string
+     JWT_SECRET=your_jwt_secret
+     STRIPE_SECRET_KEY=your_stripe_secret_key
+     ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Setup Frontend:**
+   - Navigate to the frontend directory:
+     ```bash
+     cd frontend
+     ```
+   - Install the dependencies:
+     ```bash
+     npm install
+     ```
 
-### `npm run eject`
+4. **Run the Application:**
+   - Start the backend server:
+     ```bash
+     cd backend
+     npm start
+     ```
+   - In another terminal, start the frontend server:
+     ```bash
+     cd frontend
+     npm start
+     ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. **Access the Application:**
+   Open your browser and go to `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Register a new account or log in with an existing one.
+- Navigate to the subscription management area to create a new subscription plan.
+- Use the Stripe checkout flow to manage payments securely.
+- Monitor your billing cycle and subscription status through the dashboard.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Endpoints
 
-## Learn More
+Here are some of the key API endpoints you can use:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **User Registration**: `POST /api/auth/register`
+- **User Login**: `POST /api/auth/login`
+- **Create Subscription**: `POST /api/subscribe`
+- **Get Subscription Status**: `GET /api/subscribe/status`
+- **Webhook for Stripe**: `POST /api/webhook`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributing
 
-### Code Splitting
+Contributions are welcome! If you have suggestions for improvements or new features, please create an issue or submit a pull request. Be sure to follow the existing coding style.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## License
 
-### Analyzing the Bundle Size
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+Thank you for checking out the Stripe Subscription Integration project! If you have any questions or issues, feel free to open an issue on the GitHub repository.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Happy Coding!
