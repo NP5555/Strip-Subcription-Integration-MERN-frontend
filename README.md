@@ -5,4 +5,7 @@ Run Both repo to test
 
 <img src="./assets/Strip-MERN.png">
 
+<img src="./assets/customers.png">
+
+
 # Happy Coding
