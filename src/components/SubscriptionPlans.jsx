@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import OneTimeProduct from "./OneTimeProduct";
 
 const SubscriptionPlans = () => {
   const [plans, setPlans] = useState({});
@@ -7,6 +9,7 @@ const SubscriptionPlans = () => {
   const [prices, setPrices] = useState({});
   const [loading, setLoading] = useState(true);
   const [couponLoading, setCouponLoading] = useState({});
+  const [purchaseType, setPurchaseType] = useState("subscription");
 
   useEffect(() => {
     fetchPrices();
@@ -194,44 +197,55 @@ const SubscriptionPlans = () => {
     await redirectToCheckout(priceId, isSubscription, couponCode);
   };
 
+  const handleOneTimePurchase = async (planType) => {
+    const priceId = plans[planType];
+    const couponCode =
+      document.getElementById(`coupon-${planType}`)?.value || "";
+    const isSubscription = false;
+    await redirectToCheckout(priceId, isSubscription, couponCode);
+  };
+
   const redirectToCheckout = async (priceId, isSubscription, coupon) => {
     try {
       const response = await fetch(
         "http://localhost:3000/api/create-checkout-session",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ priceId, isSubscription, coupon }),
         }
       );
-
       const data = await response.json();
 
       if (data.success) {
-        window.location.href = data.url;
+        window.location.href = data.url; // Redirect to Stripe checkout
       } else {
-        console.error("Failed to create checkout session:", data.message);
-        alert(data.message || "Failed to create checkout session");
+        alert("Failed to create checkout session");
       }
     } catch (error) {
-      console.error("Error creating checkout session:", error);
-      alert("An error occurred. Please try again.");
+      console.error("Error redirecting to checkout:", error);
     }
   };
 
   return (
-    <div className="p-4">
+    <div>
       <div className="pricing-header p-3 pb-md-4 mx-auto text-center">
-        <h1 className="display-5  fw-bold">Pricing</h1>
+        <h1 className="display-5 fw-bold">Pricing</h1>
         <p className="text-muted text-wrap">
           In today's digital world, offering subscription plans with seamless
-          payment processing is key for any business. A subscription page that
-          integrates Stripe's powerful payment features, <br></br>ncludes
-          real-time pricing updates, and applies coupon codes, you've come to
-          the right place!
+          payment processing is key for any business.<br></br> A subscription
+          page that integrates Stripe's powerful payment features, real-time
+          pricing updates, and applies coupon codes, you've come to the right
+          place!
         </p>
       </div>
 
+      {/* Display One-time Product Component */}
+      <OneTimeProduct />
+
+      {/* Display Subscription Plans */}
       <div className="container d-flex justify-content-center">
         <div className="row row-cols-1 row-cols-md-4 mb-3 text-center justify-content-center">
           {loading ? (
@@ -250,7 +264,10 @@ const SubscriptionPlans = () => {
               };
 
               return (
-                <div className="col-md-3 mb-4" key={planType}>
+                <div
+                  className="col-lg-3 col-md-6 col-sm-12 mb-4"
+                  key={planType}
+                >
                   <div className="card shadow-lg h-100 rounded-4 bg-light">
                     <div
                       className={`card-header py-3 text-white ${headerBgClasses[index]} d-flex justify-content-between align-items-center rounded-top`}
@@ -317,9 +334,17 @@ const SubscriptionPlans = () => {
                           ? "Designed for growing teams, offering enhanced features and flexibility."
                           : planType === "premium"
                           ? "Unlock the full potential with personalized onboarding support."
-                          : "Access exclusive features like advanced analytics inriched integrations."}
+                          : "Access exclusive features like advanced analytics and enriched integrations."}
                       </p>
                       <div className="mb-3">
+                        <select
+                          className="form-select mb-2"
+                          value={purchaseType}
+                          onChange={(e) => setPurchaseType(e.target.value)}
+                        >
+                          <option value="subscription">Subscribe</option>
+                          <option value="one-time">One-time Purchase</option>
+                        </select>
                         <input
                           type="text"
                           className="form-control mb-2"
@@ -338,13 +363,27 @@ const SubscriptionPlans = () => {
                         </button>
                       </div>
                       <button
-                        onClick={() => handleSubscribe(planType)}
-                        id={`subscribe-${planType}`}
+                        onClick={() =>
+                          purchaseType === "subscription"
+                            ? handleSubscribe(planType)
+                            : handleOneTimePurchase(planType)
+                        }
+                        id={`purchase-${planType}`}
                         className="w-100 btn btn-lg btn-outline-dark"
                         disabled={couponLoading[planType]}
                       >
-                        Subscribe
+                        {purchaseType === "subscription"
+                          ? "Subscribe"
+                          : "Purchase"}
                       </button>
+                      {activePlan === planType && (
+                        <Link
+                          to="/account/subscription"
+                          className="btn btn-link mt-2 d-block"
+                        >
+                          Manage Subscription
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
